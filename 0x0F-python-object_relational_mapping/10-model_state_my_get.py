@@ -31,8 +31,11 @@ if __name__ == "__main__":
     Write the sql query to be executed below
     """
 
-    filtered_letter = 'a'
-    users = session.query(State).filter(State.name.contains(
-        f'%{filtered_letter}')).order_by(State.id).all()
-    for User in users:
-        print(f"{User.id}: {User.name}")
+    state_name = sys.argv[4]
+    users = session.query(State).filter(State.name.like(
+        f'%{state_name}')).all()
+    if users:
+        for user in users:
+            print(user.id)
+    else:
+        print("Not found")

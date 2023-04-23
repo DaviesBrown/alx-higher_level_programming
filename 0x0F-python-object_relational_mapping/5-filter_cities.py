@@ -1,23 +1,38 @@
 #!/usr/bin/python3
+""" a script that takes in the name of a state as an argument
+and lists all cities of that state, using the database hbtn_0e_4_usa
+"""
+
 import MySQLdb
 import sys
 
-if __name__ =='__main__':
-    db = MySQLdb.connect(
-        user=sys.argv[1],
-        host="localhost",
-        port=3306,
-        passwd="brown_ian77",
-        db="hbtn_0e_4_usa"
-    )
-    cur = db.cursor()
-    state_name = sys.argv[2]
-    query = "SELECT cities.name FROM cities LEFT JOIN states ON cities.state_id = states.id WHERE states.name=%s ORDER BY cities.id ASC"
-    cur.execute(query, (state_name,))
-    query_rows = cur.fetchall()
-    list = [item for city in query_rows for item in city]
-    print(", ".join(list))
-            
+if __name__ == "__main__":
+    """
+    Access the database connection
+    """
+    username = sys.argv[1]
+    password = sys.argv[2]
+    database = sys.argv[3]
+    state_name = sys.argv[4]
 
-    cur.close()
-    db.close()
+    database_connection = MySQLdb.connect(
+            host="localhost",
+            user=username,
+            port=3306,
+            passwd=password,
+            db=database
+            )
+
+    cursor_obj = database_connection.cursor()
+    """Create the cursor object"""
+
+    sql = ("SELECT cities.name FROM cities INNER JOIN states \
+            ON cities.state_id = states.id WHERE states.name LIKE \
+            BINARY %s ORDER BY \
+            cities.id ASC")
+
+    cursor_obj.execute(sql, (state_name, ))
+    selected_rows = cursor_obj.fetchall()
+    print(*[row[0] for row in selected_rows], sep=", ")
+    cursor_obj.close()
+    database_connection.close()

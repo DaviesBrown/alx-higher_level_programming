@@ -1,15 +1,31 @@
 #!/usr/bin/python3
-from model_state import Base, State
-import sys
 
-from sqlalchemy import create_engine, inspect
+"""
+a script that lists all State objects from the database hbtn_0e_6_usa
+"""
+
+import sys
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from model_state import State, Base
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True)
+    """
+    Create the database engine
+    """
+    url = ('mysql://{}:{}@localhost:3306/{}'.format(
+        sys.argv[1], sys.argv[2], sys.argv[3]))
+    """
+    create a session to interact with the engine
+    """
+    engine = create_engine(url)
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    states = session.query(State).order_by(State.id).all()
-    for state in states:
-        print("{}: {}".format(state.id, state.name))
+    """
+    write the query to be executed
+    """
+    users = session.query(State).order_by(State.id)
+    for user in users:
+        print('{}: {}'.format(user.id, user.name))

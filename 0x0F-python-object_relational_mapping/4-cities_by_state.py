@@ -1,38 +1,35 @@
 #!/usr/bin/python3
-"""Script that lists all states from the database hbtn_0e_0_usa"""
 
-import sys
+"""
+a script that lists all cities from the database hbtn_0e_4_usa
+"""
+
 import MySQLdb
-
+import sys
+"""
+import the MySQLdb and sys module
+"""
 
 if __name__ == "__main__":
-    # Get command line arguments
-    mysql_username = sys.argv[1]
-    """ mysql_password = sys.argv[2]
-    db_name = sys.argv[3]
-    state_name = sys.argv[4] """
+    db_connection = MySQLdb.connect(
+            host="localhost",
+            user=sys.argv[1],
+            port=3306,
+            passwd=sys.argv[2],
+            db=sys.argv[3]
+            )
 
-    # Connect to MySQL database
-    db = MySQLdb.connect(
-        host="localhost",
-        port=3306,
-        user=mysql_username,
-        passwd="brown_ian77",
-        db="hbtn_0e_4_usa",
-    )
-
-    # Create a cursor object
-    cur = db.cursor()
-
-    # Execute a parameterized query
-    query = "SELECT cities.id, cities.name, states.name FROM cities LEFT JOIN states ON cities.state_id = states.id  ORDER BY cities.id ASC"
-    cur.execute(query)
-
-    # Fetch all the rows and display them
-    rows = cur.fetchall()
-    for row in rows:
+    cursor_obj = db_connection.cursor()
+    """
+    Create the cursor object
+    """
+    sql = ("SELECT cities.id, cities.name, states.name \
+            FROM cities INNER JOIN states on cities.state_id\
+            = states.id ORDER BY cities.id ASC")
+    cursor_obj.execute(sql)
+    selected_rows = cursor_obj.fetchall()
+    for row in selected_rows:
         print(row)
 
-    # Close cursor and database
-    cur.close()
-    db.close()
+    cursor_obj.close()
+    db_connection.close()

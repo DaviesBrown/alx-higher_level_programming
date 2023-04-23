@@ -31,8 +31,15 @@ if __name__ == "__main__":
     Write the sql query to be executed below
     """
 
-    filtered_letter = 'a'
-    users = session.query(State).filter(State.name.contains(
-        f'%{filtered_letter}')).order_by(State.id).all()
-    for User in users:
-        print(f"{User.id}: {User.name}")
+    """
+    Add the new state
+    """
+    new_state = State(name="Louisiana")
+
+    """
+    Add the new created object to the session
+    """
+    session.add(new_state)
+    session.commit()
+    print(f"{new_state.id}")
+    session.close()

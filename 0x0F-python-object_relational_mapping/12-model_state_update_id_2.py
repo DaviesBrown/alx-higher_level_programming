@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 """
-a script that lists all State objects that contain the letter a from
-the database hbtn_0e_6_usa
+a script that changes the name of a State object from the database
+hbtn_0e_6_usa
 """
 
 from sqlalchemy import create_engine
@@ -31,8 +31,11 @@ if __name__ == "__main__":
     Write the sql query to be executed below
     """
 
-    filtered_letter = 'a'
-    users = session.query(State).filter(State.name.contains(
-        f'%{filtered_letter}')).order_by(State.id).all()
-    for User in users:
-        print(f"{User.id}: {User.name}")
+    """
+    update the required state
+    """
+    user = session.query(State).filter(State.id == 2).first()
+    if user:
+        user.name = 'New Mexico'
+        session.commit()
+        session.close()

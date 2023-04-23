@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 
 """
-a script that lists all State objects that contain the letter a from
-the database hbtn_0e_6_usa
-"""
+ script that deletes all State objects with a name containing the
+ letter a from the database hbtn_0e_6_usa"""
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -32,7 +31,11 @@ if __name__ == "__main__":
     """
 
     filtered_letter = 'a'
-    users = session.query(State).filter(State.name.contains(
-        f'%{filtered_letter}')).order_by(State.id).all()
-    for User in users:
-        print(f"{User.id}: {User.name}")
+    state_to_delete = session.query(State).filter(State.name.contains(
+        f'%{filtered_letter}')).all()
+
+    if state_to_delete:
+        for state in state_to_delete:
+            session.delete(state)
+        session.commit()
+    session.close()
