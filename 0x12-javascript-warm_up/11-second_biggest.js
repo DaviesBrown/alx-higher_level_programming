@@ -4,5 +4,12 @@ if (process.argv.length <= 3) {
   console.log(0);
 } else {
   const args = process.argv.slice(2);
-  console.log(args.sort()[args.length - 2]);
+  args.sort()
+  let list = []
+  for (let i = 0; i < args.length; i++) {
+    if (!list.includes(args[i])) {
+      list.push(args[i])
+    }
+  }
+  console.log(list[list.length - 2])
 }
