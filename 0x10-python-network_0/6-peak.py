@@ -1,16 +1,13 @@
 #!/usr/bin/python3
+"""
+Find a peak in a list of unsorted integers.
+"""
 def find_peak(list_of_integers):
     """
     Find a peak in a list of unsorted integers.
-
+    
     Args:
         list_of_integers (list): List of unsorted integers.
-
-    Returns:
-        int: Peak element from the list.
-
-    Complexity:
-        The time complexity of this algorithm is O(log(n)), where n is the length of the input list.
     """
     if len(list_of_integers) < 1:
         return None
