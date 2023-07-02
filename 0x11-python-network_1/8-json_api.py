@@ -18,8 +18,8 @@ if __name__ == '__main__':
             for user in response_json:
                 print(f"[{user['id']}] {user['name']}")
         else:
-            print("No result")
+            print('No result')
     elif response.status_code == 404:
-        print("No result")
+        print('No result')
     else:
-        print(f"Error code: {response.status_code}")
+        print(f'Error code: {response.status_code}')
