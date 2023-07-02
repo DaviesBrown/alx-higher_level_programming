@@ -7,7 +7,6 @@ import urllib.request
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         url = sys.argv[1]
-        print(url)
         try:
             with urllib.request.urlopen(url) as r:
                 body = r.read().decode('utf-8')
