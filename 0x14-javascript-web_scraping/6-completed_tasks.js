@@ -7,15 +7,14 @@ request(url, (err, res, body) => {
   }
   const result = JSON.parse(body);
   const obj = {};
-  result.map((todo, i) => {
-    if (todo.completed === true) {
-      if (obj[todo.userId]) {
-        obj[todo.userId] += 1;
-      } else {
+  result.map(todo => {
+    if (todo.completed) {
+      if (obj[todo.userId] === undefined) {
         obj[todo.userId] = 1;
+      } else {
+        obj[todo.userId] += 1;
       }
     }
-    return i;
   });
   console.log(obj);
 });
