@@ -9,10 +9,10 @@ request(url, (err, res, body) => {
   const obj = {};
   result.map(todo => {
     if (todo.completed) {
-      if (obj[todo.userId] === undefined) {
-        obj[todo.userId] = 1;
-      } else {
+      if (obj[todo.userId]) {
         obj[todo.userId] += 1;
+      } else {
+        obj[todo.userId] = 1;
       }
     }
     return i;
